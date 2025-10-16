@@ -1,0 +1,1275 @@
+<!-- Inicio del documento HTML -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corpthia - Desarrollo de Software Innovador</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="image/favicon.png">
+    <!-- Carga de Tailwind CSS desde CDN para estilos responsivos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Optimización de carga de fuentes Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos corporativos profesionales -->
+    <!-- Estilos CSS personalizados para el diseño corporativo -->
+    <style>
+        /* Reset básico para eliminar márgenes y paddings por defecto */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Variables CSS para colores corporativos - aquí puedes cambiar los colores fácilmente */
+        :root {
+            --primary-blue: #1b2a53e6;    /* Azul primario corporativo - casi negro */
+            --secondary-blue: #3b82f6;  /* Azul secundario */
+            --dark-gray: #374151;       /* Gris oscuro para texto */
+            --medium-gray: #6b7280;     /* Gris medio */
+            --light-gray: #f3f4f6;      /* Gris claro para fondos */
+            --white: #ffffff;           /* Blanco */
+            --accent-blue: #132453;     /* Azul de acento para hover */
+
+            /* Variables para el degradado uniforme */
+            --overlay-gradient: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.7) 100%);
+        }
+
+        /* Estilo base del cuerpo - fuente Inter y fondo con imagen y degradado */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            /* Fondo con imagen y degradado uniforme sobre ella - puedes cambiar la opacidad en la variable --overlay-gradient */
+            background-image: var(--overlay-gradient), url('image/fondo.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        /* Estilo para el header fijo (sticky) */
+        .header-sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #16213fe6;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* Contenedor principal con ancho máximo y centrado */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Estilos para botones corporativos */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        /* Botón primario (azul) */
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Efecto hover del botón primario */
+        .btn-primary:hover {
+            background-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+        }
+
+        /* Botón secundario (borde azul) */
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        /* Efecto hover del botón secundario */
+        .btn-secondary:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Estilo para tarjetas (cards) profesionales */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+
+        /* Efecto hover para tarjetas */
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Padding consistente para secciones - más reducido */
+        .section {
+            padding: 70px 0;
+        }
+
+        /* Clase para secciones con fondo gris */
+        .section-gray {
+            background-color: var(--light-gray);
+        }
+
+        /* Animaciones de entrada sutiles */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        /* Clase para elementos visibles (agregada por JavaScript) */
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Altura uniforme para cards en sección Acerca de - tamaño fijo para igualar todas */
+        .equal-height-card {
+            min-height: 290px; /* Altura mínima para que todas las tarjetas tengan exactamente el mismo tamaño */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Media queries adicionales para elementos de confianza */
+        @media (max-width: 1024px) {
+            .equal-height-card {
+                min-height: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .equal-height-card {
+                min-height: 260px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .equal-height-card {
+                min-height: 240px;
+            }
+        }
+
+        /* Sistema de grid responsivo */
+        .grid {
+            display: grid;
+            gap: 32px;
+        }
+
+        /* Grid de 2 columnas */
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        /* Grid de 3 columnas */
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* Grid de 4 columnas */
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        /* Utilidades de espaciado */
+        .text-center { text-align: center; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        .mb-8 { margin-bottom: 32px; }
+        .mb-12 { margin-bottom: 48px; }
+
+        /* Personalización de la barra de scroll para que combine con el diseño */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-blue);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+
+        /* Estilos para el sistema de partículas */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.9;
+            animation: float 8s linear infinite;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+            z-index: 9999;
+        }
+
+        .particle:nth-child(odd) {
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+
+        .particle:nth-child(3n) {
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+
+        .particle:nth-child(5n) {
+            animation-duration: 35s;
+            animation-delay: -15s;
+        }
+
+        .particle:nth-child(7n) {
+            animation-duration: 40s;
+            animation-delay: -20s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+                transform: translate(20px, -20px) rotate(36deg) scale(1);
+            }
+            25% {
+                opacity: 0.8;
+                transform: translate(-15px, -40px) rotate(90deg) scale(1.1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translate(25px, -60px) rotate(180deg) scale(1.2);
+            }
+            75% {
+                opacity: 0.6;
+                transform: translate(-20px, -80px) rotate(270deg) scale(0.9);
+            }
+            90% {
+                opacity: 0.4;
+                transform: translate(15px, -95px) rotate(324deg) scale(0.7);
+            }
+            100% {
+                transform: translate(0, -110px) rotate(360deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* Optimización para dispositivos móviles */
+        @media (max-width: 768px) {
+            .particle {
+                animation-duration: 15s !important;
+            }
+            .particle:nth-child(odd) {
+                animation-duration: 18s !important;
+            }
+            .particle:nth-child(3n) {
+                animation-duration: 22s !important;
+            }
+        }
+
+        /* Media queries para responsive design completo */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 20px;
+            }
+            .section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            .section {
+                padding: 50px 0;
+            }
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .btn {
+                padding: 14px 20px;
+                font-size: 15px;
+                min-height: 48px; /* Touch-friendly */
+            }
+            .equal-height-card {
+                height: auto;
+                min-height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 12px;
+            }
+            .section {
+                padding: 40px 0;
+            }
+            .btn {
+                padding: 16px 24px;
+                font-size: 16px;
+                min-height: 52px; /* Extra touch-friendly for small screens */
+            }
+            .text-4xl {
+                font-size: 2rem;
+            }
+            .text-3xl {
+                font-size: 1.75rem;
+            }
+            .text-xl {
+                font-size: 1.125rem;
+            }
+            .grid-4 {
+                gap: 16px;
+            }
+            .equal-height-card {
+                min-height: 180px;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover {
+                transform: none; /* Remove hover effects on touch devices */
+            }
+            .card:hover {
+                transform: none;
+            }
+            /* Ensure minimum touch targets */
+            a, button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+    </style>
+</head>
+<!-- Header corporativo sticky -->
+<header class="header-sticky">
+    <div class="container flex justify-between items-center py-4">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3">
+            <!-- Para hacer el logo más grande, cambia w-10 h-10 por w-12 h-12. Para más pequeño, usa w-8 h-8 -->
+            <img src="image/logo.png" alt="Corpthia Logo" class="w-12 h-12 rounded-lg">
+            <div>
+                <h1 class="text-xl font-bold text-white">Corpthia</h1>
+                <p class="text-xs" style="color: #ffffff;">Desarrollo de Software</p>
+
+            </div>
+        </div>
+
+        <!-- Navegación principal -->
+        <nav class="hidden md:flex items-center space-x-8">
+            <a href="#inicio" class="text-white hover:text-secondary-blue transition-colors font-medium">Inicio</a>
+            <a href="#empresa" class="text-white hover:text-secondary-blue transition-colors font-medium">Empresa</a>
+            <a href="#servicios" class="text-white hover:text-secondary-blue transition-colors font-medium">Servicios</a>
+            <a href="#productos" class="text-white hover:text-secondary-blue transition-colors font-medium">Productos</a>
+            <a href="#contacto" class="text-white hover:text-secondary-blue transition-colors font-medium">Contacto</a>
+        </nav>
+
+        <!-- CTA principal -->
+        <div class="hidden md:flex items-center space-x-4">
+            <a href="#contacto" class="btn btn-primary">Solicitar Consulta</a>
+        </div>
+
+        <!-- Menú móvil -->
+        <button class="md:hidden text-white" id="mobile-menu-btn">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Menú móvil desplegable -->
+<div class="hidden md:hidden bg-primary-blue border-t border-secondary-blue" id="mobile-menu">
+    <div class="container py-4 space-y-4">
+        <a href="#inicio" class="block text-white hover:text-secondary-blue transition-colors">Inicio</a>
+        <a href="#empresa" class="block text-white hover:text-secondary-blue transition-colors">Empresa</a>
+        <a href="#servicios" class="block text-white hover:text-secondary-blue transition-colors">Servicios</a>
+        <a href="#productos" class="block text-white hover:text-secondary-blue transition-colors">Productos</a>
+        <a href="#contacto" class="block text-white hover:text-secondary-blue transition-colors">Contacto</a>
+        <a href="#contacto" class="btn btn-secondary w-full mt-4">Solicitar Consulta</a>
+    </div>
+</div>
+</header>
+
+<!-- Scripts para funcionalidad -->
+<script>
+    // Función para animar elementos al hacer scroll
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.fade-in');
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            if (elementTop < windowHeight - 100) {
+                element.classList.add('visible');
+            }
+        });
+    }
+
+    // Función para navegación suave
+    function smoothScroll(target) {
+        const element = document.querySelector(target);
+        if (element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
+    // Función para manejar clics en navegación
+    function handleNavClick(e) {
+        e.preventDefault();
+        const target = e.target.getAttribute('href');
+        smoothScroll(target);
+    }
+
+    // Función para header sticky
+    function handleScroll() {
+        const header = document.querySelector('.header-sticky');
+        if (window.scrollY > 100) {
+            header.classList.add('shadow-lg');
+        } else {
+            header.classList.remove('shadow-lg');
+        }
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configurar navegación
+        const navLinks = document.querySelectorAll('.header-sticky a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', handleNavClick);
+        });
+
+        // Configurar menú móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Cerrar menú móvil al hacer clic en un enlace
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    });
+
+    // Sistema de Partículas Épico
+    class ParticleSystem {
+        constructor() {
+            this.container = document.getElementById('particles-container');
+            this.particles = [];
+            this.maxParticles = 80; // Más partículas para efecto épico
+            this.colors = [
+                'rgba(59, 130, 246, 0.3)',  // Azul secundario
+                'rgba(27, 42, 83, 0.4)',   // Azul primario
+                'rgba(19, 36, 83, 0.3)',   // Azul acento
+                'rgba(255, 255, 255, 0.2)' // Blanco sutil
+            ];
+            this.init();
+        }
+
+        init() {
+            // Reducir partículas en móviles para mejor rendimiento
+            if (window.innerWidth < 768) {
+                this.maxParticles = 40;
+            }
+
+            // Crear partículas iniciales inmediatamente
+            for (let i = 0; i < this.maxParticles; i++) {
+                this.createParticle();
+            }
+
+            // Generar nuevas partículas periódicamente
+            setInterval(() => {
+                if (this.particles.length < this.maxParticles) {
+                    this.createParticle();
+                }
+            }, 3000); // Más espaciado para mejor rendimiento
+
+            // Limpiar partículas viejas
+            setInterval(() => {
+                this.cleanupParticles();
+            }, 2000); // Menos frecuente para mejor rendimiento
+
+            console.log('Sistema de partículas inicializado con', this.maxParticles, 'partículas');
+        }
+
+        createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+
+            // Tamaño aleatorio más grande
+            const size = Math.random() * 12 + 6; // 6-18px
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+
+            // Color aleatorio
+            particle.style.backgroundColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+
+            // Posición inicial aleatoria en toda la pantalla
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = Math.random() * 100 + 'vh';
+
+            // Velocidad de animación aleatoria más rápida
+            const duration = Math.random() * 8 + 6; // 6-14 segundos
+            particle.style.animationDuration = duration + 's';
+            particle.style.animationDelay = Math.random() * -10 + 's';
+
+            this.container.appendChild(particle);
+            this.particles.push({
+                element: particle,
+                created: Date.now()
+            });
+        }
+
+        cleanupParticles() {
+            const now = Date.now();
+            this.particles = this.particles.filter(particle => {
+                // Remover partículas que han existido más de 30 segundos
+                if (now - particle.created > 30000) {
+                    if (particle.element.parentNode) {
+                        particle.element.parentNode.removeChild(particle.element);
+                    }
+                    return false;
+                }
+                return true;
+            });
+        }
+    }
+
+    // Inicializar sistema de partículas cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configurar navegación
+        const navLinks = document.querySelectorAll('.header-sticky a[href^="#"]');
+        navLinks.forEach(link => {
+            link.addEventListener('click', handleNavClick);
+        });
+
+        // Configurar menú móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Cerrar menú móvil al hacer clic en un enlace
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Inicializar sistema de partículas
+        new ParticleSystem();
+    });
+
+    // Ejecutar animaciones al cargar y hacer scroll
+    window.addEventListener('load', animateOnScroll);
+    window.addEventListener('scroll', function() {
+        animateOnScroll();
+        handleScroll();
+    });
+</script>
+
+    <!-- Espaciador para el header sticky -->
+    <div class="h-20"></div>
+
+    <!-- Sistema de Partículas -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Sección Hero Corporativa -->
+    <section id="inicio" class="section relative min-h-screen flex items-center">
+
+        <div class="container relative z-10">
+            <div class="grid grid-2 items-center gap-12">
+                <!-- Contenido principal -->
+                <div class="fade-in text-white">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                        Desarrollo de Software
+                        <span class="text-primary-blue">Profesional</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-200 mb-8 leading-relaxed">
+                        Transformamos ideas innovadoras en soluciones digitales de alto impacto.
+                        Especialistas en desarrollo de aplicaciones móviles y web con las últimas tecnologías.
+                    </p>
+
+                    <!-- Estadísticas rápidas -->
+                    <div class="grid grid-4 gap-6 mb-8">
+                        <div class="text-center bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4">
+                            <div class="text-3xl font-bold text-white">50+</div>
+                            <div class="text-sm text-gray-200">Proyectos Completados</div>
+                        </div>
+                        <div class="text-center bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4">
+                            <div class="text-3xl font-bold text-white">98%</div>
+                            <div class="text-sm text-gray-200">Satisfacción Cliente</div>
+                        </div>
+                        <div class="text-center bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4">
+                            <div class="text-3xl font-bold text-white">5+</div>
+                            <div class="text-sm text-gray-200">Años de Experiencia</div>
+                        </div>
+                        <div class="text-center bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4">
+                            <div class="text-3xl font-bold text-white">24/7</div>
+                            <div class="text-sm text-gray-200">Soporte Técnico</div>
+                        </div>
+                    </div>
+
+                    <!-- CTAs principales -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contacto" class="btn btn-primary w-full sm:w-auto">Iniciar Proyecto</a>
+                        <a href="#productos" style="color: #ffffff;" class="btn btn-secondary w-full sm:w-auto">Ver Portafolio</a>
+                    </div>
+                </div>
+
+                <!-- Imagen/Ilustración corporativa -->
+                <div class="fade-in">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 text-white border border-white border-opacity-20">
+                        <div class="text-center">
+                            <svg class="w-24 h-24 mx-auto mb-6 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <h3 class="text-xl sm:text-2xl font-bold mb-4">Tecnología de Vanguardia</h3>
+                            <p class="text-gray-200">
+                                Utilizamos las últimas tecnologías y metodologías ágiles para garantizar
+                                productos de alta calidad y rendimiento excepcional.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Acerca de la Empresa -->
+    <section id="empresa" class="section relative">
+
+        <div class="container relative z-10">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+                    Acerca de Corpthia
+                </h2>
+                <p class="text-lg sm:text-xl text-white max-w-3xl mx-auto" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
+                    Somos una empresa especializada en desarrollo de software con más de 5 años de experiencia
+                    creando soluciones digitales innovadoras para empresas y emprendedores.
+                </p>
+            </div>
+
+            <div class="grid grid-2 gap-12 items-start fade-in">
+                <!-- Misión y Visión -->
+                <div class="space-y-8">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 equal-height-card">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">Nuestra Misión</h3>
+                        </div>
+                        <p class="text-white leading-relaxed flex-grow">
+                            Desarrollar soluciones de software de alta calidad que transformen ideas innovadoras
+                            en productos digitales funcionales, escalables y seguros, contribuyendo al crecimiento
+                            y éxito de nuestros clientes.
+                        </p>
+                    </div>
+
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 equal-height-card">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-secondary-blue rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">Nuestra Visión</h3>
+                        </div>
+                        <p class="text-white leading-relaxed flex-grow">
+                            Ser reconocidos como líderes en el desarrollo de aplicaciones móviles y web,
+                            utilizando tecnologías emergentes como IA, machine learning y cloud computing
+                            para crear impacto positivo en la sociedad.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Valores y Certificaciones -->
+                <div class="space-y-8">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 equal-height-card">
+                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-6">Nuestros Valores</h3>
+                        <div class="space-y-4 flex-grow">
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-primary-blue rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <span class="text-white font-bold text-sm">✓</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white">Innovación Tecnológica</h4>
+                                    <p class="text-white text-sm opacity-90">Siempre a la vanguardia de las últimas tecnologías</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-primary-blue rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <span class="text-white font-bold text-sm">✓</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white">Calidad Superior</h4>
+                                    <p class="text-white text-sm opacity-90">Compromiso con la excelencia en cada proyecto</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 bg-primary-blue rounded-full flex items-center justify-center mr-4 mt-1">
+                                    <span class="text-white font-bold text-sm">✓</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white">Compromiso Total</h4>
+                                    <p class="text-white text-sm opacity-90">Dedicación completa al éxito de nuestros clientes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Elementos de confianza -->
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 equal-height-card">
+                        <h3 class="text-xl sm:text-2xl font-bold text-white mb-6">Certificaciones y Experiencia</h3>
+                        <div class="grid grid-2 gap-4 flex-grow">
+                            <div class="grid grid-2 gap-2">
+                                <div class="text-center p-3 bg-white bg-opacity-20 rounded-lg">
+                                    <div class="text-lg font-bold text-white mb-1">5+</div>
+                                    <div class="text-xs text-white opacity-90">Años de Experiencia</div>
+                                </div>
+                                <div class="text-center p-3 bg-white bg-opacity-20 rounded-lg">
+                                    <div class="text-lg font-bold text-white mb-1">50+</div>
+                                    <div class="text-xs text-white opacity-90">Proyectos Completados</div>
+                                </div>
+                            </div>
+                            <div class="grid grid-2 gap-2">
+                                <div class="text-center p-3 bg-white bg-opacity-20 rounded-lg">
+                                    <div class="text-lg font-bold text-white mb-1">98%</div>
+                                    <div class="text-xs text-white opacity-90">Satisfacción Cliente</div>
+                                </div>
+                                <div class="text-center p-4 bg-white bg-opacity-20 rounded-lg">
+                                    <div class="text-lg font-bold text-white mb-1">24/7</div>
+                                    <div class="text-xs text-white opacity-90">Soporte Disponible</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+            
+    <!-- Sección Servicios Profesionales -->
+    <section id="servicios" class="section relative">
+
+        <div class="container relative z-10">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+                    Nuestros Servicios
+                </h2>
+                <p class="text-lg sm:text-xl text-white max-w-3xl mx-auto" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
+                    Ofrecemos soluciones completas de desarrollo de software, desde la concepción
+                    hasta el lanzamiento y mantenimiento continuo.
+                </p>
+            </div>
+
+            <div class="grid grid-3 gap-8 fade-in">
+                <!-- Servicio 1: Desarrollo de Apps -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 text-center h-full">
+                    <div class="w-16 h-16 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-4">Desarrollo de Aplicaciones</h3>
+                    <p class="text-white mb-6 opacity-90">
+                        Creamos aplicaciones móviles y web nativas con las últimas tecnologías,
+                        optimizadas para rendimiento y experiencia de usuario excepcional.
+                    </p>
+                    <ul class="text-left space-y-2 mb-6">
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-primary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">iOS y Android nativo</span>
+                        </li>
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-primary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">React Native / Flutter</span>
+                        </li>
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-primary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">Progressive Web Apps</span>
+                        </li>
+                    </ul>
+                    <a href="#contacto" class="btn btn-secondary w-full">Saber Más</a>
+                </div>
+
+                <!-- Servicio 2: Consultoría Tecnológica -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 text-center h-full">
+                    <div class="w-16 h-16 bg-secondary-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-4">Consultoría Tecnológica</h3>
+                    <p class="text-white mb-6 opacity-90">
+                        Asesoramiento experto para elegir las mejores tecnologías y arquitecturas
+                        para su proyecto, maximizando la eficiencia y escalabilidad.
+                    </p>
+                    <ul class="text-left space-y-2 mb-6">
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-secondary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">Arquitectura de software</span>
+                        </li>
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-secondary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">Selección de tecnologías</span>
+                        </li>
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-secondary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">Optimización de procesos</span>
+                        </li>
+                    </ul>
+                    <a href="#contacto" class="btn btn-secondary w-full">Consultar</a>
+                </div>
+
+                <!-- Servicio 3: Mantenimiento y Soporte -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 text-center h-full">
+                    <div class="w-16 h-16 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-white mb-4">Mantenimiento y Soporte</h3>
+                    <p class="text-white mb-6 opacity-90">
+                        Servicio continuo de mantenimiento, actualizaciones de seguridad y soporte
+                        técnico para garantizar el óptimo funcionamiento de sus aplicaciones.
+                    </p>
+                    <ul class="text-left space-y-2 mb-6">
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-primary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">Actualizaciones de seguridad</span>
+                        </li>
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-primary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">Soporte técnico 24/7</span>
+                        </li>
+                        <li class="flex items-center text-sm">
+                            <span class="w-2 h-2 bg-primary-blue rounded-full mr-3"></span>
+                            <span class="text-white opacity-90">Monitoreo continuo</span>
+                        </li>
+                    </ul>
+                    <a href="#contacto" class="btn btn-secondary w-full">Contactar Soporte</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Productos Destacados -->
+    <section id="productos" class="section relative">
+
+        <div class="container relative z-10">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+                    Productos Destacados
+                </h2>
+                <p class="text-lg sm:text-xl text-white max-w-3xl mx-auto" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
+                    Aplicaciones innovadoras desarrolladas con las últimas tecnologías,
+                    disponibles en las principales plataformas móviles.
+                </p>
+            </div>
+
+            <div class="grid grid-3 gap-8 fade-in">
+                <!-- Producto 1 -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white">Arcadia</h3>
+                            <span class="text-sm text-primary-blue font-medium">Entretenimiento</span>
+                        </div>
+                    </div>
+                    <p class="text-white mb-4 opacity-90">
+                        Aplicación de música y ejercicios para mantenerte activo y motivado durante tus rutinas diarias.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-white opacity-90">Disponible en:</span>
+                        <div class="flex space-x-2">
+                            <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-xs text-white">iOS</span>
+                            <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-xs text-white">Android</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-secondary-blue rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white">Gestor de Contraseñas</h3>
+                            <span class="text-sm text-secondary-blue font-medium">Seguridad</span>
+                        </div>
+                    </div>
+                    <p class="text-white mb-4 opacity-90">
+                        Solución segura para gestionar y proteger todas tus contraseñas con encriptación avanzada.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-white opacity-90">Disponible en:</span>
+                        <div class="flex space-x-2">
+                            <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-xs text-white">Web</span>
+                            <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-xs text-white">Mobile</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg sm:text-xl font-bold text-white">Aprender Python</h3>
+                            <span class="text-sm text-primary-blue font-medium">Educación</span>
+                        </div>
+                    </div>
+                    <p class="text-white mb-4 opacity-90">
+                        Plataforma interactiva para aprender programación en Python desde cero hasta nivel avanzado.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-white opacity-90">Disponible en:</span>
+                        <div class="flex space-x-2">
+                            <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-xs text-white">Web</span>
+                            <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-xs text-white">iOS</span>
+                            <span class="px-2 py-1 bg-white bg-opacity-20 rounded text-xs text-white">Android</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 fade-in">
+                <a href="#contacto" class="btn btn-primary">Ver Todos los Productos</a>
+            </div>
+        </div>
+    </section>
+        </main>
+
+    <!-- Sección Testimonios -->
+    <section class="section relative">
+
+        <div class="container relative z-10">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+                    Lo que dicen nuestros clientes
+                </h2>
+                <p class="text-lg sm:text-xl text-white max-w-3xl mx-auto" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.8);">
+                    La satisfacción de nuestros clientes es nuestra mayor recompensa.
+                    Conoce algunas experiencias de trabajo con Corpthia.
+                </p>
+            </div>
+
+            <div class="grid grid-3 gap-8 fade-in">
+                <!-- Testimonio 1 -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary-blue rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">JS</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white">Juan Sánchez</h4>
+                            <p class="text-sm text-white opacity-90">CEO, TechStart</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex text-yellow-400 mb-2">
+                            ★★★★★
+                        </div>
+                        <p class="text-white italic opacity-90">
+                            "Corpthia transformó completamente nuestra idea en una aplicación excepcional.
+                            Su profesionalismo y atención al detalle superaron todas nuestras expectativas."
+                        </p>
+                    </div>
+                    <div class="text-sm text-white opacity-90">
+                        Proyecto: App de gestión empresarial
+                    </div>
+                </div>
+
+                <!-- Testimonio 2 -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-secondary-blue rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">MR</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white">María Rodríguez</h4>
+                            <p class="text-sm text-white opacity-90">Fundadora, EduTech</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex text-yellow-400 mb-2">
+                            ★★★★★
+                        </div>
+                        <p class="text-white italic opacity-90">
+                            "El equipo de Corpthia no solo desarrolló nuestra plataforma educativa,
+                            sino que nos guiaron en cada paso del proceso. Increíble experiencia."
+                        </p>
+                    </div>
+                    <div class="text-sm text-white opacity-90">
+                        Proyecto: Plataforma e-learning
+                    </div>
+                </div>
+
+                <!-- Testimonio 3 -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary-blue rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">CL</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white">Carlos López</h4>
+                            <p class="text-sm text-white opacity-90">Director IT, LogiCorp</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex text-yellow-400 mb-2">
+                            ★★★★★
+                        </div>
+                        <p class="text-white italic opacity-90">
+                            "La calidad del código y el soporte post-lanzamiento han sido excepcionales.
+                            Corpthia es nuestro partner tecnológico de confianza."
+                        </p>
+                    </div>
+                    <div class="text-sm text-white opacity-90">
+                        Proyecto: Sistema de logística
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="section relative">
+
+        <div class="container relative z-10">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4" >
+                    Hablemos de tu proyecto
+                </h2>
+                <p class="text-lg sm:text-xl text-white max-w-3xl mx-auto">
+                    ¿Tienes una idea innovadora? Estamos aquí para convertirla en realidad.
+                    Contáctanos y comencemos a trabajar juntos.
+                </p>
+            </div>
+
+            <div class="grid grid-2 gap-12 fade-in">
+                <!-- Información de contacto -->
+                <div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-6">Información de Contacto</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Email</h4>
+                                <p class="text-white opacity-90">contacto@corpthia.com</p>
+                                <p class="text-white opacity-90">proyectos@corpthia.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">WhatsApp</h4>
+                                <p class="text-white opacity-90">+57 300 123 4567</p>
+                                <p class="text-sm text-white opacity-90">Respuesta en menos de 24 horas</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-secondary-blue rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white">Ubicación</h4>
+                                <p class="text-white opacity-90">Bogotá, Colombia</p>
+                                <p class="text-white opacity-90">Trabajo remoto disponible</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Redes sociales -->
+                    <div class="mt-8">
+                        <h4 class="font-semibold text-white mb-4">Síguenos</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-primary-blue rounded-lg flex items-center justify-center text-white hover:bg-accent-blue transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-primary-blue rounded-lg flex items-center justify-center text-white hover:bg-accent-blue transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de contacto -->
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20 h-full">
+                    <h3 class="text-xl sm:text-2xl font-bold text-white mb-6">Envíanos un mensaje</h3>
+                    <form class="space-y-4">
+                        <div class="grid grid-1 sm:grid-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2">Nombre</label>
+                                <input type="text" class="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue text-white placeholder-white placeholder-opacity-70" placeholder="Tu nombre">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2">Email</label>
+                                <input type="email" class="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue text-white placeholder-white placeholder-opacity-70" placeholder="tu@email.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">Asunto</label>
+                            <input type="text" class="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue text-white placeholder-white placeholder-opacity-70" placeholder="¿En qué podemos ayudarte?">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">Mensaje</label>
+                            <textarea rows="4" class="w-full px-3 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue text-white placeholder-white placeholder-opacity-70" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página corporativo -->
+    <footer class="text-white py-12 backdrop-blur-sm">
+        <div class="container">
+            <div class="grid grid-2 md:grid-4 gap-8">
+                <!-- Logo y descripción -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-primary-blue rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Corpthia</h3>
+                    </div>
+                    <p class="text-medium-gray mb-4">
+                        Desarrollo de software profesional con las últimas tecnologías.
+                        Transformamos ideas innovadoras en soluciones digitales de alto impacto.
+                    </p>
+                </div>
+
+                <!-- Servicios -->
+                <div>
+                    <h4 class="font-semibold mb-4">Servicios</h4>
+                    <ul class="space-y-2 text-medium-gray">
+                        <li><a href="#servicios" class="hover:text-white transition-colors">Desarrollo de Apps</a></li>
+                        <li><a href="#servicios" class="hover:text-white transition-colors">Consultoría Tecnológica</a></li>
+                        <li><a href="#servicios" class="hover:text-white transition-colors">Mantenimiento</a></li>
+                        <li><a href="#productos" class="hover:text-white transition-colors">Productos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Empresa -->
+                <div>
+                    <h4 class="font-semibold mb-4">Empresa</h4>
+                    <ul class="space-y-2 text-medium-gray">
+                        <li><a href="#empresa" class="hover:text-white transition-colors">Sobre Nosotros</a></li>
+                        <li><a href="#contacto" class="hover:text-white transition-colors">Contacto</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Política de Privacidad</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Términos de Servicio</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contacto -->
+                <div>
+                    <h4 class="font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-medium-gray">
+                        <li>contacto@corpthia.com</li>
+                        <li>+57 300 123 4567</li>
+                        <li>Bogotá, Colombia</li>
+                        <li>Lun - Vie: 9:00 - 18:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-medium-gray mt-8 pt-8 text-center">
+                <p class="text-medium-gray">
+                    &copy; 2024 Corpthia. Todos los derechos reservados.
+                    <span class="block mt-2">Desarrollando aplicaciones innovadoras para un mundo mejor.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+    </div>
+</body>
+</html>
+
